@@ -47,6 +47,13 @@
 
         function updateSnake() {
             const newHead = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+            // Wrap around when snake hits the border
+            if (newHead.x < 0) newHead.x = canvas.width - 40;
+            if (newHead.x >= canvas.width) newHead.x = 0;
+            if (newHead.y < 0) newHead.y = canvas.height - 40;
+            if (newHead.y >= canvas.height) newHead.y = 0;
+
             snake.unshift(newHead);
             if (snake[0].x === food.x && snake[0].y === food.y) {
                 snakeLength++;
@@ -60,9 +67,6 @@
         }
 
         function checkCollision() {
-            if (snake[0].x < 0 || snake[0].x >= canvas.width || snake[0].y < 0 || snake[0].y >= canvas.height) {
-                resetGame();
-            }
             for (let i = 1; i < snake.length; i++) {
                 if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
                     resetGame();
